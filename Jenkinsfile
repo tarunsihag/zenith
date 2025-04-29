@@ -1,32 +1,25 @@
 pipeline {
-  agent any
-
-  stages {
-    
-    stage('Install Dependencies') {
-      steps {
-        bat 'npm install'
-      }
+    agent any
+    stages {
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'npm run build'
+            }
+        }
+        stage('Docker Build') {
+            steps {
+                sh 'docker build -t your-image-name .'
+            }
+        }
+        stage('Docker Run') {
+            steps {
+                sh 'docker run -d -p 3000:3000 your-image-name'
+            }
+        }
     }
-
-    stage('Build') {
-      steps {
-        bat 'npm run build'
-      }
-    }
-
-    stage('Docker Build') {
-      steps {
-        bat 'docker build -t my-react-app .'
-      }
-    }
-
-    stage('Docker Run') {
-      steps {
-        bat 'docker stop my-react-app || echo No container'
-        bat 'docker rm my-react-app || echo No container'
-        bat 'docker run -d -p 8080:80 --name my-react-app my-react-app'
-      }
-    }
-  }
 }
