@@ -2,12 +2,7 @@ pipeline {
   agent any
 
   stages {
-    stage('Clone') {
-      steps {
-        git 'https://github.com/tarunsihag/zenith'
-      }
-    }
-
+    
     stage('Install Dependencies') {
       steps {
         bat 'npm install'
